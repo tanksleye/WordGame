@@ -1,0 +1,31 @@
+body {
+    background: coral;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: white;
+    padding-top: 20px;
+}
+
+.container {
+    text-align: center;
+  }
+
+  .col-md-6 {
+      float: right;
+      border-style: dashed;
+  }
+
+  p {
+      font-weight: bold;
+  }
+
+ 
+
+h1,h2,h3,
+h4,h5,h6 {
+    padding: 5px;
+    background-color: cyan;
+}
+
+#currentWord {
+    letter-spacing: 10px;
+}
