@@ -6,6 +6,8 @@
     <title>Pixar Word Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="style.css/style.css">
     
@@ -19,35 +21,200 @@
     </div>
     <div class="container p-3">  
         <div class="rom">
+                <div class="col-md-6">
+                        <h2>Press Any Key to Get Started!</h2>
+                        <h4>Wins</h4>
+                        <h5 id="totalWins"></h5>
+                        <h4>Current Word</h4>
+                        <h3 id="currentWord"></h3>
+                        <h4>Guesses Remaining</h4>
+                        <h6 id="remainingGuesses"></h6>
+                        <h4>Letters Guessed</h4>
+                        <h3 id="guessedLetters"></h3>
+                </div>
+
             <div class="col-md-6">
-                <a href="https://placeholder.com"><img src="https://via.placeholder.com/200"></a>
+                <img id="youwin-image" src="images/Disney-Pixar-logo2.jpg" alt="you win" />
+                <img id="youLose" src="images/youlose.jpg" alt="you lose" />
+                <h2 id="pressKeyTryAgain">Press Any Key to Try Again!</h2>
+                
                 
             </div>
-            <div class="col-md-6">
-                <h2>Press Any Key to Get Started!</h2>
-                <h4>Wins</h4>
-                <h5 id="totalWins"></h5>
-                <h4>Current Word</h4>
-                <h3 id="currentWord"></h3>
-                <h4>Guesses Remaining</h4>
-                <h6 id="remainingGuesses"></h6>
-                <h4>Letters Guessed</h4>
-                <h3 id="guessedLetters"></h3>
-            </div>
+            
         </div>
         
     </div>
 
+ 
     
 <script type="text/javascript">
+
 // variable for word list
-     var movies =  ["cars", "up", "toystory", "coco", "abugslife", "findingnemo", "montersinc", "ratatouille", "theincredibles", "findingdory"]; 
-     var guess = 
-     for (var i = 0; i < movies.length; i++) {
-         
-     }
+var movies =  ["cars", "up", "toystory", "coco", "abugslife", "findingnemo", "monstersinc", "ratatouille", "theincredibles", "findingdory"]; 
+var moviesImg = [
+    cars= {
+        name: "cars", 
+        img: "images/cars.jpg"
+    },
+    up= {
+        name: "up", 
+        img: "images/up.jpg"
+    },
+    toystory= {
+        name: "toystory", 
+        img: "images/toystory.jpg"
+    },
+    coco= {
+        name: "coco", 
+        img: "images/coco.jpg"
+    },
+    abugslife= {
+        name: "abugslife", 
+        img: "images/abugslife.jpg"
+    },
+    findingnemo= {
+        name: "findingnemo", 
+        img: "images/findingnemo.jpg"
+    },
+    monstersinc= {
+        name: "monstersinc", 
+        img: "images/monstersinc.jpg"
+    },
+    ratatouille= {
+        name: "ratatouille", 
+        img: "images/ratatouille.jpg"
+    },
+    theincredibles= {
+        name: "theincredibles", 
+        img: "images/theincredibles.jpg"
+    },
+    findingdory= {
+        name: "findingdory", 
+        img: "images/findingdory.jpg"
+    },
+    
+];
+const maxTries = 12;            
+
+// variables for the letters and words guessed
+var guessedLetters = [];       
+var currentWordIndex;          
+var guessingWord = [];          
+var remainingGuesses = 0;       
+var gameStarted = false;        
+var hasFinished = false;             
+var wins = 0;              
+
+restGame();
+updateDisplay();
+    function restGame() {
+        remainingGuesses = maxTries;
+        gameStarted = false;
+
+        currentWordIndex = Math.floor(Math.random() * (movies.length));
+// console.log(currentWordIndex);
+    
+    guessedLetters = [];
+    guessingWord = [];
+
+    for (var i = 0; i < movies[currentWordIndex].length; i++) {
+        guessingWord.push("_");
+    }
+
+    document.getElementById("pressKeyTryAgain").style.cssText = "display: none";
+    document.getElementById("youLose").style.cssText = "display: none";
+    document.getElementById("youwin-image").style.cssText = "display: none";
+
+    updateDisplay();
+};
+
+    function updateDisplay() {
+
+document.getElementById("totalWins").innerText = wins;
+document.getElementById("currentWord").innerText = "";
+
+for (var i = 0; i < guessingWord.length; i++) {
+    document.getElementById("currentWord").innerText += guessingWord[i];
+}
+
+document.getElementById("remainingGuesses").innerText = remainingGuesses;
+document.getElementById("guessedLetters").innerText = guessedLetters;
 
 
+if(remainingGuesses <= 0) {
+    
+    document.getElementById("pressKeyTryAgain").style.cssText = "display:block";
+    hasFinished = true;
+}
+};
+
+function makeGuess(letter) {
+    if (remainingGuesses > 0) {
+        if (!gameStarted) {
+            gameStarted = true;
+        }
+
+       
+        if (guessedLetters.indexOf(letter) === -1) {
+            guessedLetters.push(letter);
+            evaluateGuess(letter);
+        }
+    }
+    
+    updateDisplay();
+    checkWin();
+};
+
+function evaluateGuess(letter) {
+   
+    var positions = [];
+
+   
+    for (var i = 0; i < movies[currentWordIndex].length; i++) {
+        if(movies[currentWordIndex][i] === letter) {
+            positions.push(i);
+        }
+    }
+
+    
+    if (positions.length <= 0) {
+        remainingGuesses--;
+    
+    } else {
+       
+        for(var i = 0; i < positions.length; i++) {
+            guessingWord[positions[i]] = letter;
+        }
+    }
+};
+
+function checkWin() {
+    if(guessingWord.indexOf("_") === -1) {
+        document.getElementById("youwin-image").style.cssText = "display: block";
+        document.getElementById("pressKeyTryAgain").style.cssText= "display: block";
+        wins++;
+        hasFinished = true;
+    }
+};
+
+function checkLose() {
+    document.getElementById("youLose").style.cssText = "display: block";
+    document.getElementById("pressKeyTryAgain").style.cssText= "display: block";
+}
+
+document.onkeydown = function(event) {
+    
+    if(hasFinished) {
+        resetGame();
+        hasFinished = false;
+    } else {
+        
+        if(event.keyCode >= 65 && event.keyCode <= 90) {
+            makeGuess(event.key.toLowerCase());
+        }
+    }
+};
+    
 </script>
 
 
