@@ -18,6 +18,10 @@ body {
       font-weight: bold;
   }
 
+ #youLose, #youwin-image{ 
+    display: block;
+    margin: 0 auto;
+}
  
 
 h1,h2,h3,
